@@ -22,11 +22,10 @@ function islandora_premis_menu() {
     'islandora/object/%islandora_object/manage/premis/download' => array(
       'title' => 'Download PREMIS',
       'type' => MENU_CALLBACK,
-      'page callback' => 'islandora_premis_transform_foxml_to_premis',
+      'page callback' => 'islandora_premis_download_transformed',
       'page arguments' => array(2),
       'access callback' => 'islandora_premis_access_callback',
       'access arguments' => array(2, TRUE),
-      'delivery callback' => '_islandora_premis_xml_download',
       'file' => 'includes/utilities.inc',
     ),
     'admin/islandora/tools/premis' => array(

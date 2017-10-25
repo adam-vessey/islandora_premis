@@ -58,9 +58,6 @@ function islandora_premis_run_xsl_transform($info) {
  */
 function islandora_premis_transform_foxml_to_premis(AbstractObject $object) {
   $foxml_str = islandora_premis_get_foxml($object);
-  if (!$foxml_str) {
-    drupal_not_found();
-  }
 
   // See https://jira.duraspace.org/browse/ISLANDORA-2016.
   $creating_application_info = system_get_info('module', 'islandora');
@@ -190,4 +187,19 @@ function islandora_premis_get_object_characteristics_extension($pid, $dsid) {
   }
 
   return FALSE;
+}
+
+/**
+ * Setup headers for the download of the transformed PREMIS.
+ *
+ * @param AbstractObject $object
+ *   The object for which to generate the PREMIS
+ *
+ * @return string
+ *   The transformed PREMIS XML.
+ */
+function islandora_premis_download_transformed(AbstractObject $object) {
+  drupal_add_http_header('Content-type', 'text/xml;charset=utf8');
+  drupal_add_http_header('Content-Disposition', 'attachment; filename="premis.xml"');
+  return islandora_premis_transform_foxml_to_premis($object);
 }
